@@ -1,9 +1,22 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 import { useNavigate } from "react-router-dom";
+import { forgotPassword } from "../../../firebaseConfig";
+import { useState } from "react";
+import { CallMergeSharp } from "@mui/icons-material";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let res = await forgotPassword(email);
+    console.log(res);
+    navigate("/login");
+  };
 
   return (
     <div>
@@ -22,7 +35,7 @@ const ForgotPassword = () => {
         <Typography variant="h5" color={"primary"}>
           ¿Olvidaste tu contraseña?
         </Typography>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Grid
             container
             rowSpacing={2}
@@ -36,6 +49,7 @@ const ForgotPassword = () => {
                 label="Email"
                 fullWidth
                 name="email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={10} md={12}>

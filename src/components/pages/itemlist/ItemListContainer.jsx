@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { db } from "../../../firebaseConfig";
 import { getDocs, collection } from "firebase/firestore";
 
@@ -7,7 +8,12 @@ export const ItemListContainer = () => {
   useEffect(() => {
     let refCollection = collection(db, "products");
     getDocs(refCollection)
-      .then((res) => console.log(res))
+      .then((res) => {
+        let newArray = res.docs.map((product) => {
+          return { ...product.data(), id: product.id };
+        });
+        console.log(newArray);
+      })
       .catch(console.log(err));
   }, []);
 

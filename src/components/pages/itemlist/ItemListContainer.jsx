@@ -12,9 +12,10 @@ export const ItemListContainer = () => {
         let newArray = res.docs.map((product) => {
           return { ...product.data(), id: product.id };
         });
+        console.log(res.docs);
         console.log(newArray);
       })
-      .catch(console.log(err));
+      .catch((err) => console.log(err));
   }, []);
 
   return (
